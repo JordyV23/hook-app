@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Message } from "./Message";
 
 export const SimpleForm = () => {
   //El hook para mantener el estado es useEffect
@@ -19,9 +20,21 @@ export const SimpleForm = () => {
   };
 
   //Se lanza al redibujar el componente
+  //No se recomienda utilizar el useEffect sin una dependencia
+  //Es una condicion por la cual se quiere que el useEffect se
+  //vuelva a disparar
+  //Si se pone un [] es para que solo sea llamado 1 vez
   useEffect(() => {
-    console.log("useEffect");
-  });
+    //console.log("useEffect");
+  }, []);
+
+  useEffect(() => {
+    //console.log("FormState Changed");
+  }, [formState]);
+
+  useEffect(() => {
+    //console.log("email Changed");
+  }, [email]);
 
   return (
     <>
@@ -45,8 +58,8 @@ export const SimpleForm = () => {
         value={email}
         onChange={onInputChange}
       />
+
+      {username === "master" && <Message />}
     </>
   );
 };
-
-//Ultimo video visto: 7 - Parte 9
