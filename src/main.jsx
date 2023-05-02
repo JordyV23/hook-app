@@ -2,7 +2,9 @@
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "./08-useReducer/intro-reducer"
-import { CallbackHook } from "./06-memos/CallbackHook";
+import { TodoApp } from "./08-useReducer/TodoApp";
+
+//import { CallbackHook } from "./06-memos/CallbackHook";
 //import { Memorize } from "./06-memos/Memorize";
 //import { MemoHook } from "./06-memos/MemoHook";
 //import { FocusScreen } from "./04-useRef/FocusScreen";
@@ -23,5 +25,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   // <FocusScreen />
   // <Memorize />
   // <MemoHook/>
-  <CallbackHook />
+  // <CallbackHook />
+  <TodoApp/>
 );
