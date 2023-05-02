@@ -1,23 +1,20 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { todoReducer } from "./todoReducer";
 import { TodoList } from "./components/TodoList";
 import { TodoAdd } from "./components/TodoAdd";
 
 export const TodoApp = () => {
-  const initialState = [
-    {
-      id: new Date().getTime(),
-      description: "Recolectar la gema del alma",
-      done: false,
-    },
-    {
-      id: new Date().getTime() * 3,
-      description: "Recolectar la gema de la mente",
-      done: false,
-    },
-  ];
+  const initialState = [];
 
-  const [todos, dispatch] = useReducer(todoReducer, initialState);
+  const init = () => {
+    return JSON.parse(localStorage.getItem("todos")) || [];
+  };
+
+  const [todos, dispatch] = useReducer(todoReducer, initialState, init);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const onNewTodo = (todo) => {
     handleNewTodo(todo);
@@ -28,20 +25,44 @@ export const TodoApp = () => {
       type: "[TODO] Add Todo",
       payload: todo,
     };
-
-    dispatch(action)
+    dispatch(action);
   };
+
+  const handleDeleteTodo = (id) => {
+    dispatch({
+      type: "[TODO] Remove Todo",
+      payload: id,
+    });
+  };
+
+  const handleToggleTodo = (id) => {
+    dispatch({
+      type: "[TODO] Toggle Todo",
+      payload: id,
+    });
+  };
+
+  const calcularPendientes = () => {
+    let pendientes = 0;
+    todos.map(todo => {
+      if(todo.done){
+        pendientes+=1
+      }
+    })
+
+    return pendientes
+  }
 
   return (
     <>
       <h1>
-        TodoApp: {todos.length},<small>pendientes: 2</small>
+        TodoApp: {todos.length}, <small>Pendientes: {calcularPendientes()}</small>
       </h1>
       <hr />
 
       <div className="row">
         <div className="col-7">
-          <TodoList todos={todos} />
+          <TodoList todos={todos} onDeleteTodo={handleDeleteTodo} onToggleTodo={handleToggleTodo}/>
         </div>
 
         <div className="col-5">
