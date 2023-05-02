@@ -1,6 +1,7 @@
 // import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
+import "./08-useReducer/intro-reducer"
 import { CallbackHook } from "./06-memos/CallbackHook";
 //import { Memorize } from "./06-memos/Memorize";
 //import { MemoHook } from "./06-memos/MemoHook";
